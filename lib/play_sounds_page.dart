@@ -19,7 +19,7 @@ class _PlaySoundsPageState extends State<PlaySoundsPage> {
     print('the file path from package ${widget.assetPackPath}');
     print(File('${widget.assetPackPath}/sound1.mp3').existsSync());
     if (Platform.isAndroid) {
-      player.setFilePath('${widget.assetPackPath}/sound1.mp3');
+      player.setFilePath('${widget.assetPackPath}/sounds/sound1.mp3');
     } else if (Platform.isIOS) {
       print('last one == ${widget.assetPackPath}/sound1.mp3');
       player.setFilePath('${widget.assetPackPath}/sound1.mp3');
