@@ -1,0 +1,17 @@
+{
+  "data" : [
+    {
+      "filename" : "video1.mp4",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "on-demand-resource-tags" : [
+      "video"
+    ]
+  }
+}
