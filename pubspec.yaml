@@ -9,9 +9,14 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  asset_delivery: ^0.0.1
+  asset_delivery:
+    git:
+      url: https://github.com/mohsen-motlagh/asset_delivery.git
+      ref: da8cd5bb9f5317582ef5a233f5dfe23a354aebbc
+  #  ^0.0.1
   just_audio: ^0.9.43
   path_provider: ^2.1.5
+  video_player: ^2.9.2
 
 dev_dependencies:
   flutter_test:

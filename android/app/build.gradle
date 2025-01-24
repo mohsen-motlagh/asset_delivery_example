@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    assetPacks = [":music", ":video", ":dogImage", ":catImage"]
+    assetPacks = [":music", ":video", ":dogImage"]
     namespace = "com.mohsenmotlagh.asset_delivery_example"
     compileSdk = 34
     ndkVersion = flutter.ndkVersion

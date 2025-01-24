@@ -4,17 +4,29 @@ import 'dart:io';
 import 'package:asset_delivery/asset_delivery.dart';
 import 'package:asset_delivery/asset_delivery_method_channel.dart';
 import 'package:asset_delivery_example/play_sounds_page.dart';
+import 'package:asset_delivery_example/play_video_page.dart';
+import 'package:asset_delivery_example/show_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class DownloadSoundAssetsPage extends StatefulWidget {
-  const DownloadSoundAssetsPage({super.key});
+class DownloadAssetsPage extends StatefulWidget {
+  final String assetPackName;
+  final String namingPattern;
+  final int assetsCount;
+  final String fileExtension;
+  const DownloadAssetsPage({
+    super.key,
+    required this.assetPackName,
+    required this.namingPattern,
+    required this.assetsCount,
+    required this.fileExtension,
+  });
 
   @override
-  State<DownloadSoundAssetsPage> createState() => _DownloadSoundAssetsPageState();
+  State<DownloadAssetsPage> createState() => _DownloadAssetsPageState();
 }
 
-class _DownloadSoundAssetsPageState extends State<DownloadSoundAssetsPage> with TickerProviderStateMixin {
+class _DownloadAssetsPageState extends State<DownloadAssetsPage> with TickerProviderStateMixin {
   final _assetStatusController = StreamController<StatusMap>.broadcast();
   final _assetIosStatusController = StreamController<double>.broadcast();
   double? downloadProgress;
@@ -28,10 +40,15 @@ class _DownloadSoundAssetsPageState extends State<DownloadSoundAssetsPage> with 
       } catch (e) {
         debugPrint('error message for status checking ===== $e');
       }
-      AssetDelivery.fetch('music');
+      AssetDelivery.fetch(widget.assetPackName);
       _assetStatusController.stream.listen((event) {
         if (event.status == 'COMPLETED') {
-          AssetDelivery.getAssetPackPath(assetPackName: 'music', count: 4, namingPattern: 'sound%d').then(
+          AssetDelivery.getAssetPackPath(
+            assetPackName: widget.assetPackName,
+            count: widget.assetsCount,
+            namingPattern: widget.namingPattern,
+            fileExtension: widget.fileExtension,
+          ).then(
             (path) {
               if (path != null && mounted) {}
             },
@@ -45,7 +62,7 @@ class _DownloadSoundAssetsPageState extends State<DownloadSoundAssetsPage> with 
           ScaffoldMessenger.of(context).clearSnackBars();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('there is an error because of network connection'),
+              content: Text('there is an error because of network connection ==== ${e.toString()}'),
             ),
           );
         }
@@ -70,7 +87,6 @@ class _DownloadSoundAssetsPageState extends State<DownloadSoundAssetsPage> with 
     return FutureBuilder<String>(
       future: getDownloadResourcesPath(),
       builder: (context, path) {
-        print('pathhhh future builder ======${path.data}');
         return Scaffold(
           appBar: AppBar(
             title: Text('Download Sound Assets'),
@@ -84,17 +100,26 @@ class _DownloadSoundAssetsPageState extends State<DownloadSoundAssetsPage> with 
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CircularProgressIndicator.adaptive(
-                      value: snapshot.data?.downloadProgress,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                      child: LinearProgressIndicator(
+                        value: snapshot.data?.downloadProgress,
+                      ),
                     ),
                     Text('${snapshot.data?.status}...'),
                     if (path.data != null)
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) {
-                                return PlaySoundsPage(assetPackPath: path.data!);
+                                if (widget.fileExtension == 'mp3') {
+                                  return PlaySoundsPage(assetPackPath: path.data!);
+                                } else if (widget.fileExtension == 'jpg') {
+                                  return ShowImages(assetPackPath: path.data!);
+                                } else {
+                                  return PlayVideoPage(assetPackPath: path.data!);
+                                }
                               },
                             ),
                           );
@@ -133,8 +158,13 @@ class _DownloadSoundAssetsPageState extends State<DownloadSoundAssetsPage> with 
     });
 
     try {
-      final path =
-          await AssetDelivery.getAssetPackPath(assetPackName: 'music', count: 4, namingPattern: 'sound%d') as String;
+      final path = await AssetDelivery.getAssetPackPath(
+          assetPackName: widget.assetPackName,
+          count: widget.assetsCount,
+          namingPattern: widget.namingPattern,
+          fileExtension: widget.fileExtension) as String;
+
+      print('path =======  inside the fetching ====== $path');
       return path;
     } on PlatformException catch (e) {
       throw (e.message ?? 'Error');

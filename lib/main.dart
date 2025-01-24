@@ -1,6 +1,5 @@
-import 'package:asset_delivery_example/download_sound_assets_page.dart';
+import 'package:asset_delivery_example/download_assets_page.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -43,31 +42,57 @@ class _MyHomePageState extends State<MyHomePage> {
           spacing: 30,
           children: <Widget>[
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return DownloadAssetsPage(
+                        assetPackName: 'music',
+                        assetsCount: 4,
+                        namingPattern: 'sound%d',
+                        fileExtension: 'mp3',
+                      );
+                    },
+                  ),
+                );
+              },
               child: Text('Play sounds'),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return DownloadAssetsPage(
+                        assetPackName: 'video',
+                        assetsCount: 1,
+                        namingPattern: 'video%d',
+                        fileExtension: 'mp4',
+                      );
+                    },
+                  ),
+                );
+              },
               child: Text('Play videos'),
             ),
             ElevatedButton(
-              onPressed: () {},
-              child: Text('show Cat Images'),
-            ),
-            ElevatedButton(
               onPressed: () async {
-                final path = await getApplicationDocumentsDirectory();
                 if (context.mounted) {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
-                        return DownloadSoundAssetsPage();
+                        return DownloadAssetsPage(
+                          assetPackName: 'dogImage',
+                          assetsCount: 3,
+                          namingPattern: 'dog%d',
+                          fileExtension: 'jpg',
+                        );
                       },
                     ),
                   );
                 }
               },
-              child: Text('show Dog Images'),
+              child: Text('Show Dog Images'),
             ),
           ],
         ),
