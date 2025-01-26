@@ -162,7 +162,7 @@ class _DownloadAssetsPageState extends State<DownloadAssetsPage> with TickerProv
           assetPackName: widget.assetPackName,
           count: widget.assetsCount,
           namingPattern: widget.namingPattern,
-          fileExtension: widget.fileExtension) as String;
+          fileExtension: widget.fileExtension,) as String;
 
       print('path =======  inside the fetching ====== $path');
       return path;
