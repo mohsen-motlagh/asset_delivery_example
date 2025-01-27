@@ -38,7 +38,7 @@ class _DownloadAssetsPageState extends State<DownloadAssetsPage> with TickerProv
       try {
         _setAssetsStatusListener();
       } catch (e) {
-        debugPrint('error message for status checking ===== $e');
+        debugPrint('error message for status checking $e');
       }
       AssetDelivery.fetch(widget.assetPackName);
       _assetStatusController.stream.listen((event) {
@@ -72,7 +72,7 @@ class _DownloadAssetsPageState extends State<DownloadAssetsPage> with TickerProv
       _assetIosStatusController.stream.listen(
         (event) {
           if (event == 1.0 && mounted) {
-            print('completed====');
+            print('completed');
           }
         },
       );
@@ -94,7 +94,7 @@ class _DownloadAssetsPageState extends State<DownloadAssetsPage> with TickerProv
           body: StreamBuilder<StatusMap>(
             stream: _assetStatusController.stream,
             builder: (context, snapshot) {
-              print('======= ${snapshot.data?.downloadProgress}');
+              print(snapshot.data?.downloadProgress);
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -159,12 +159,11 @@ class _DownloadAssetsPageState extends State<DownloadAssetsPage> with TickerProv
 
     try {
       final path = await AssetDelivery.getAssetPackPath(
-          assetPackName: widget.assetPackName,
-          count: widget.assetsCount,
-          namingPattern: widget.namingPattern,
-          fileExtension: widget.fileExtension,) as String;
-
-      print('path =======  inside the fetching ====== $path');
+        assetPackName: widget.assetPackName,
+        count: widget.assetsCount,
+        namingPattern: widget.namingPattern,
+        fileExtension: widget.fileExtension,
+      ) as String;
       return path;
     } on PlatformException catch (e) {
       throw (e.message ?? 'Error');

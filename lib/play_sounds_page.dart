@@ -20,7 +20,6 @@ class _PlaySoundsPageState extends State<PlaySoundsPage> {
       player.setFilePath('${widget.assetPackPath}/sounds/sound1.mp3');
     } else if (Platform.isIOS) {
       final actualPath = Uri.parse(widget.assetPackPath).toFilePath();
-      _init('$actualPath/sound1.mp3');
       player.setFilePath('$actualPath/sound1.mp3');
       // you can also access other sounds by changing the sound1.mp3 to sound2.mp3, sound3.mp3, sound4.mp3
     }
@@ -54,10 +53,5 @@ class _PlaySoundsPageState extends State<PlaySoundsPage> {
         ],
       ),
     );
-  }
-
-  void _init(String path) async {
-    final check = await File(path).exists();
-    print('check ====== $check');
   }
 }

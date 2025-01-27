@@ -17,17 +17,13 @@ class _PlayVideoPageState extends State<PlayVideoPage> {
 
   @override
   void initState() {
-    print('path === ${widget.assetPackPath}');
     if (Platform.isAndroid) {
       path = '${widget.assetPackPath}/video/video1.mp4';
     } else if (Platform.isIOS) {
       path = '${Uri.parse(widget.assetPackPath).toFilePath()}video1.mp4';
     }
-    _init();
-    print('path ==22222= ${File(path!).existsSync()}');
     _controller = VideoPlayerController.file(File(path!))
       ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
       });
 
@@ -60,11 +56,5 @@ class _PlayVideoPageState extends State<PlayVideoPage> {
         ),
       ),
     );
-  }
-
-  void _init() async {
-    print(' 4564879646 path == $path');
-    final check = await File(path!).exists();
-    print('check ====== $check');
   }
 }
