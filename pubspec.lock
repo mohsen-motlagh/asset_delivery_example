@@ -5,8 +5,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: ef6e3655e5078c37f5c80b92eb5b1a4ed56e618e
-      resolved-ref: ef6e3655e5078c37f5c80b92eb5b1a4ed56e618e
+      ref: main
+      resolved-ref: c71eb894461beb53640981b9731145e1f263e296
       url: "https://github.com/mohsen-motlagh/asset_delivery.git"
     source: git
     version: "0.0.1"

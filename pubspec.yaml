@@ -12,7 +12,7 @@ dependencies:
   asset_delivery:
     git:
       url: https://github.com/mohsen-motlagh/asset_delivery.git
-      ref: ef6e3655e5078c37f5c80b92eb5b1a4ed56e618e
+      ref: main
   #  ^0.0.1
   just_audio: ^0.9.43
   path_provider: ^2.1.5
