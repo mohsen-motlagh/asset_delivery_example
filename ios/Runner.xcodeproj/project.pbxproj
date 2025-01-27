@@ -216,7 +216,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				KnownAssetTags = (
-					catImage,
 					dogImage,
 					music,
 					video,
